@@ -7,27 +7,23 @@ class Solution {
 
         int start = intervals[0][0];
         int end = intervals[0][1];
-if(intervals.length==1){
-   return new int[][]{{start,end}};
-}
+
         for (int i = 1; i < intervals.length; i++) {
 
-            while (i < intervals.length && intervals[i][0] <= end) {
+            if (intervals[i][0] <= end) {
 
                 end = Math.max(end, intervals[i][1]);
-
-                i++;
             }
+            else {
 
-            l.add(new int[]{start, end});
-
-            if (i < intervals.length) {
+                l.add(new int[]{start, end});
 
                 start = intervals[i][0];
                 end = intervals[i][1];
             }
-            if(i==intervals.length-1)l.add(new int[]{start, end});
         }
+
+        l.add(new int[]{start, end});
 
         return l.toArray(new int[l.size()][]);
     }
