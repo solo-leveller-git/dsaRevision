@@ -1,7 +1,8 @@
 class Solution {
 
     public int countNodes(TreeNode root) {
-        if (root == null) return 0;
+        if (root == null)
+            return 0;
 
         int left = countl(root);
         int right = countr(root);
@@ -9,7 +10,7 @@ class Solution {
         if (left == right) {
             return (2 << left) - 1;
         }
-
+            else
         return countNodes(root.left) + countNodes(root.right) + 1;
     }
 
