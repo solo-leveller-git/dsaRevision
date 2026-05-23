@@ -12,41 +12,61 @@ class Node {
 }
 */
 class Solution {
+
     public Node flatten(Node root) {
         return rec(root);
-        
     }
-    public Node rec(Node root){
-        if(root==null || root.next==null)return root;
+
+    public Node rec(Node root) {
+
+        if (root == null || root.next == null)
+            return root;
+
         Node front = rec(root.next);
-        return merge(root,front);
+
+        return merge(root, front);
     }
-    public Node merge(Node r1, Node r2){
+
+    public Node merge(Node r1, Node r2) {
+
         Node dummy = new Node(-1);
         Node res = dummy;
-        while(r1!=null && r2!=null){
-            if(r1.data<r2.data){dummy.bottom=r1;
-                r1=r1.bottom;
+
+        while (r1 != null && r2 != null) {
+
+            if (r1.data < r2.data) {
+
+                dummy.bottom = r1;
+                r1 = r1.bottom;
+
+            } else {
+
+                dummy.bottom = r2;
+                r2 = r2.bottom;
             }
-            else{
-                dummy.bottom=r2;
-                r2=r2.bottom;
-            }
-            dummy.next=null;
-            dummy=dummy.bottom;
+
+            dummy = dummy.bottom;
+            dummy.next = null;
         }
-        while(r1!=null){
-            dummy.bottom=r1;
-                r1=r1.bottom;
-                dummy.next=null;
-                dummy=dummy.bottom;
+
+        while (r1 != null) {
+
+            dummy.bottom = r1;
+            r1 = r1.bottom;
+
+            dummy = dummy.bottom;
+            dummy.next = null;
         }
-        while(r2!=null){
-             dummy.bottom=r2;
-                r2=r2.bottom;
-                dummy.next=null;
-                dummy=dummy.bottom;
+
+        while (r2 != null) {
+
+            dummy.bottom = r2;
+            r2 = r2.bottom;
+
+            dummy = dummy.bottom;
+            dummy.next = null;
         }
+
         return res.bottom;
     }
 }
