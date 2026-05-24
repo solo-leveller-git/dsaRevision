@@ -1,23 +1,29 @@
 class Solution {
+
     public int[] singleNumber(int[] nums) {
-        int totalXor = nums[0];
-        for(int i = 1 ; i < nums.length ; i++){
-            totalXor^=nums[i];
+
+        int xor = 0;
+
+        for (int n : nums) {
+            xor ^= n;
         }
-        int j = 0;
-        while((totalXor&1)!=1){
-            totalXor>>=1;
-            j++;
-        }
+
+        // rightmost set bit
+        int mask = xor & -xor;
+
         int first = 0;
         int second = 0;
-        for(int n : nums){
-           int temp = n;
-           if(((temp>>j)&1)==0)first^=n;
-           else second^=n;
 
+        for (int n : nums) {
+
+            if ((n & mask) == 0) {
+                first ^= n;
+            } else {
+                second ^= n;
+            }
         }
-        return new int[]{first,second};
+
+        return new int[]{first, second};
     }
 }
 
