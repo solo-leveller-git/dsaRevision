@@ -1,14 +1,27 @@
 class Solution {
+
     public int countPrimes(int n) {
+
         boolean[] nonPrime = new boolean[n];
-        int ans =0;
-for(int i = 2; i < n ; i++){
-    if(!nonPrime[i])ans++;
-    for(int j = 2 ; i*j<n ; j++){
-        nonPrime[j*i]=true;
-    }
-}
-return ans;
+
+        int ans = 0;
+
+        for (int i = 2; i < n; i++) {
+
+            if (!nonPrime[i]) {
+
+                ans++;
+
+                if ((long)i * i < n) {
+
+                    for (int j = i * i; j < n; j += i) {
+                        nonPrime[j] = true;
+                    }
+                }
+            }
+        }
+
+        return ans;
     }
 }
 
