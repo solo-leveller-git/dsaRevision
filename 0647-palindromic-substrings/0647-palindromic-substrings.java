@@ -1,22 +1,48 @@
 class Solution {
+
     public int countSubstrings(String s) {
-        Boolean[][] dp = new Boolean[s.length()][s.length()];
 
         int count = 0;
-        for(int i = 0 ; i < s.length() ; i++){
-            for(int j = i ; j < s.length() ; j++){
-                if(isPal(s,i,j,dp)){
-                    count++;
-                }
-            }
+
+        // Try every index as center
+        for (int i = 0; i < s.length(); i++) {
+
+            // Odd length palindrome
+            // Example:
+            // "aba"
+            //   ^
+            count += expand(s, i, i);
+
+            // Even length palindrome
+            // Example:
+            // "abba"
+            //   ^^
+            count += expand(s, i, i + 1);
         }
+
         return count;
     }
-    public boolean isPal(String s, int i, int j, Boolean[][] dp){
-        if(i>=j)return true;
-        if(dp[i][j]!=null)return dp[i][j];
-        if(s.charAt(i)!=s.charAt(j))return dp[i][j]= false;
-        return dp[i][j]=isPal(s,i+1,j-1,dp);
+
+    public int expand(String s, int l, int r) {
+
+        int count = 0;
+
+        // Expand while:
+        // 1. inside boundary
+        // 2. characters match
+        while (l >= 0 &&
+               r < s.length() &&
+               s.charAt(l) == s.charAt(r)) {
+
+            // Current substring is palindrome
+            count++;
+
+            // Expand outward
+            l--;
+            r++;
+        }
+
+        return count;
     }
 }
 
