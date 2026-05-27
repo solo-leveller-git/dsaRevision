@@ -15,8 +15,8 @@ class Solution {
     public boolean isPal(String s, int i, int j, Boolean[][] dp){
         if(i>=j)return true;
         if(dp[i][j]!=null)return dp[i][j];
-        if(s.charAt(i)!=s.charAt(j))return false;
-        return isPal(s,i+1,j-1,dp);
+        if(s.charAt(i)!=s.charAt(j))return dp[i][j]= false;
+        return dp[i][j]=isPal(s,i+1,j-1,dp);
     }
 }
 
