@@ -1,0 +1,47 @@
+class Solution {
+    public static int ans = 0;
+    static int inversionCount(int arr[]) {
+        ans=0;
+        sort(arr,0,arr.length-1);
+        return ans;
+    }
+    public static void sort(int arr[], int l, int r){
+        if(l>=r)return;
+        int m = l+(r-l)/2;
+        sort(arr,l,m);
+        sort(arr,m+1,r);
+        merge(arr,l,m,r);
+    }
+    public static void merge(int arr[], int l, int m, int r){
+        int left = l;
+        int right = m+1;
+        List<Integer> temp = new ArrayList<>();
+        while(left<=m && right<=r){
+            if(arr[left]<=arr[right]){
+                temp.add(arr[left]);
+                left++;
+            }
+            else{
+                int len = m-left+1;
+                ans+=len;
+                temp.add(arr[right]);
+                right++;
+            }
+        }
+        while(left<=m){
+                temp.add(arr[left]);
+                left++;
+        }
+        while(right<=r){
+                temp.add(arr[right]);
+                right++;
+        }
+        for(int i = l ; i <= r ; i++){
+            arr[i]=temp.get(i-l);
+        }
+    }
+}
+
+// Synced seamlessly with LeetHub Pro
+// Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
+// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
