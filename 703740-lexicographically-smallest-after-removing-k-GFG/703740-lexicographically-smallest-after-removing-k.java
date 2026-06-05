@@ -7,7 +7,7 @@ class Solution {
         if ((n & (n - 1)) == 0) {
             ops /= 2;
         } else {
-            ops *= 2L;
+            ops *= 2;
         }
 
         if (ops >= n) return "-1";
