@@ -1,7 +1,6 @@
 class Solution {
     public String lexicographicallySmallest(String s, int k) {
         int n = s.length();
-
         long ops = k;
 
         if ((n & (n - 1)) == 0) {
