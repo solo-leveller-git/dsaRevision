@@ -12,24 +12,32 @@ class Node {
 */
 class Solution {
     Node compute(Node head) {
-        Node traverse = head;
-        Stack<Node> st = new Stack<>();
-        while(traverse!=null){
-            while(!st.isEmpty() && traverse.data>st.peek().data){
-                st.pop();
-            }
-            st.push(traverse);
-            if(st.size()==1){
-                head=st.peek();
-            }
+        Node rev = reverse(head);
+        head=rev;
+        Node max = rev;
+        while(rev!=null){
+            if(rev.data<max.data){
+                max.next=rev.next;
+            }    
             else{
-                Node nxt = st.pop();
-                st.peek().next=nxt;
-                st.push(nxt);
+                max=rev;
             }
-            traverse=traverse.next;
+            rev=rev.next;
         }
+        head = reverse(head);
         return head;
+        
+    }
+    Node reverse(Node head){
+        Node prev = null;
+        Node temp = head;
+        while(temp!=null){
+            Node next = temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=next;
+        }
+        return prev;
     }
 }
 
