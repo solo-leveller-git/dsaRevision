@@ -5,68 +5,52 @@
  *     ListNode next;
  *     ListNode() {}
  *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) {
- *         this.val = val;
- *         this.next = next;
- *     }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
  * }
  */
 class Solution {
-
     public ListNode reverseKGroup(ListNode head, int k) {
-
+        if(head==null || head.next==null)return head;
+        ListNode start = head;
         ListNode temp = head;
-        ListNode pG = null;
-
-        while (temp != null) {
-
-            ListNode kthNode = kth(temp, k);
-
-            if (kthNode == null) break;
-
-            ListNode nG = kthNode.next;
-            kthNode.next = null;
-
-            reverse(temp);
-
-            if (head == temp) {
-                head = kthNode;
-            } else {
-                pG.next = kthNode;
+        ListNode prevTail = null;
+        while(temp!=null){
+            int i  = 0;
+            while(temp!=null && i<k-1){
+                temp=temp.next;
+                i++;
             }
-
-            temp.next = nG;
-            pG = temp;
-            temp = temp.next;
+            if(temp==null){
+                prevTail.next=start;
+                break;
+            }
+            ListNode nextGroup = temp.next;
+            temp.next=null;
+            reverse(start);
+            if(start==head){
+                head=temp;
+            }else{
+                prevTail.next=temp;
+            }
+            temp=nextGroup;
+            prevTail=start;
+            start = nextGroup;
+            
         }
-
         return head;
     }
-
-    public void reverse(ListNode head) {
-
+    public void reverse(ListNode head){
         ListNode prev = null;
-        ListNode temp = head;
-
-        while (temp != null) {
-
-            ListNode nxt = temp.next;
-            temp.next = prev;
-            prev = temp;
-            temp = nxt;
+        ListNode curr =head;
+        while(curr!=null){
+            ListNode nxt = curr.next;
+            curr.next = prev;
+            prev=curr;
+            curr=nxt;
         }
-    }
-
-    public ListNode kth(ListNode head, int k) {
-
-        while (head != null && --k > 0) {
-            head = head.next;
-        }
-
-        return head;
     }
 }
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
