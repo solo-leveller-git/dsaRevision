@@ -1,76 +1,52 @@
-/*
-class Node {
-    int data;
-    Node next;
-    Node bottom;
-
-    Node(int x) {
-        data = x;
-        next = null;
-        bottom = null;
-    }
-}
-*/
 class Solution {
-
     public Node flatten(Node root) {
-        return rec(root);
+        return helper(root);
     }
 
-    public Node rec(Node root) {
-
+    public Node helper(Node root) {
         if (root == null || root.next == null)
             return root;
 
-        Node front = rec(root.next);
+        Node connect = helper(root.next);   // FIX 1
 
-        return merge(root, front);
+        return merge(root, connect);
     }
 
-    public Node merge(Node r1, Node r2) {
-
+    public Node merge(Node root, Node connect) {
         Node dummy = new Node(-1);
-        Node res = dummy;
+        Node temp = dummy;
 
-        while (r1 != null && r2 != null) {
-
-            if (r1.data < r2.data) {
-
-                dummy.bottom = r1;
-                r1 = r1.bottom;
-
+        while (root != null && connect != null) {
+            if (root.data < connect.data) {
+                temp.bottom = root;         // FIX 2
+                root = root.bottom;
             } else {
-
-                dummy.bottom = r2;
-                r2 = r2.bottom;
+                temp.bottom = connect;      // FIX 2
+                connect = connect.bottom;
             }
 
-            dummy = dummy.bottom;
-            dummy.next = null;
+            temp = temp.bottom;
+            temp.next = null;
         }
 
-        while (r1 != null) {
-
-            dummy.bottom = r1;
-            r1 = r1.bottom;
-
-            dummy = dummy.bottom;
-            dummy.next = null;
+        while (root != null) {
+            temp.bottom = root;             // FIX 2
+            root = root.bottom;
+            temp = temp.bottom;
+            temp.next = null;
         }
 
-        while (r2 != null) {
-
-            dummy.bottom = r2;
-            r2 = r2.bottom;
-
-            dummy = dummy.bottom;
-            dummy.next = null;
+        while (connect != null) {
+            temp.bottom = connect;          // FIX 2
+            connect = connect.bottom;
+            temp = temp.bottom;
+            temp.next = null;
         }
 
-        return res.bottom;
+        return dummy.bottom;               // FIX 3
     }
 }
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
