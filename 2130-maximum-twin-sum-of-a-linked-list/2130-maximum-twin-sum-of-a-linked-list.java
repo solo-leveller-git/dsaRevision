@@ -4,30 +4,22 @@ class Solution {
             return head.val + head.next.val;
 
         int max = Integer.MIN_VALUE;
-        ListNode dummy = new ListNode(0);
-        ListNode tail = dummy;
-        ListNode curr = head;
-
-        while (curr != null) {
-            tail.next = new ListNode(curr.val);
-            tail = tail.next;
-            curr = curr.next;
-        }
-
-        ListNode reverse = reverseN(dummy.next);
 
         ListNode slow = head;
-        ListNode fast = head;
+        ListNode fast = head.next;
 
-        while (fast != null) {
-            int nodeSum = slow.val + reverse.val;
-            max = Math.max(max, nodeSum);
-
+        while (fast.next != null) {
             slow = slow.next;
-            reverse = reverse.next;
             fast = fast.next.next;
         }
-
+        ListNode nGroup = slow.next;
+        slow.next=null;
+        ListNode reverse = reverseN(nGroup);
+        while(head!=null){
+            max=Math.max(max,(head.val+reverse.val));
+            head=head.next;
+            reverse=reverse.next;
+        }
         return max;
     }
 
