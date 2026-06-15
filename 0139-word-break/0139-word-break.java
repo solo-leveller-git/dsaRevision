@@ -1,37 +1,21 @@
 class Solution {
-
     public boolean wordBreak(String s, List<String> wordDict) {
-        int[] dp = new int[s.length()];
-        Arrays.fill(dp, -1);
+        Boolean[] dp = new Boolean[s.length()+1];
 
-        return check(s, wordDict, 0, dp);
+        return helper(s,wordDict,0,dp);
     }
-
-    public boolean check(String s, List<String> wordDict, int idx, int[] dp) {
-
-        if (idx >= s.length()) return true;
-
-        if (dp[idx] != -1) return dp[idx] == 1;
-
-        for (String word : wordDict) {
-
-            int l = word.length();
-
-            if (idx + l <= s.length() &&
-                s.substring(idx, idx + l).equals(word)) {
-
-                if (check(s, wordDict, idx + l, dp)) {
-                    dp[idx] = 1;
-                    return true;
-                }
+    public boolean helper(String s, List<String> dict, int i,Boolean[] dp){
+        if(i>=s.length())return dp[i]=true;
+        if(dp[i]!=null)return dp[i];
+        for(int j = i ; j < s.length() ; j++){
+            if(dict.contains(s.substring(i,j+1))){
+                if(helper(s,dict,j+1,dp))return dp[i]=true;
             }
         }
-
-        dp[idx] = 0;
-        return false;
+        return dp[i]=false;
     }
 }
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
