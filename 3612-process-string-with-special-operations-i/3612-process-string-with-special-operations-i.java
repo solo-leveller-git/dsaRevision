@@ -9,18 +9,11 @@ class Solution {
             }
             else if(curr=='#')sb.append(sb);
             else{
-               sb = reverse(sb);
+               sb.reverse();
             }
         } 
         return sb.toString();
     }
-    public StringBuilder reverse(StringBuilder sb){
-    StringBuilder ret = new StringBuilder();
-    for(int i = sb.length() - 1; i >= 0; i--){
-        ret.append(sb.charAt(i));
-    }
-    return ret;
-}
 }
 
 // Synced seamlessly with LeetHub Pro
