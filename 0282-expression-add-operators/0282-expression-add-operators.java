@@ -1,38 +1,78 @@
 class Solution {
 
+    List<String> ans;
+
     public List<String> addOperators(String num, int target) {
-        List<String> ans = new ArrayList<>();
+        ans = new ArrayList<>();
 
-        dfs(ans, "", num, target, 0, 0, 0);
+        helper(num, target, 0, "", 0, 0);
 
-        return ans;
+        return ans; 
     }
 
-    public void dfs(List<String> ans, String path, String num, int target, int pos, long eval, long multed) {
-        if (pos == num.length()) {
+    public void helper(String num,
+                       int target,
+                       int i,
+                       String path,
+                       long last,
+                       long eval) {
+
+        if (i == num.length()) {
             if (eval == target) {
                 ans.add(path);
             }
-
-            return;
+            return; 
         }
-        for (int i = pos; i < num.length(); i++) {
-            if (i != pos && num.charAt(pos) == '0') {
+
+        for (int j = i; j < num.length(); j++) {
+
+            if (j > i && num.charAt(i) == '0')
                 break;
-            }
-            long cur = Long.parseLong(num.substring(pos, i + 1));
-            if (pos == 0) {
-                dfs(ans, path + cur, num, target, i + 1, cur, cur);
+
+            long curr = Long.parseLong(num.substring(i, j + 1));
+            if (i == 0) {
+
+                helper(
+                    num,
+                    target,
+                    j + 1,
+                    path + curr,
+                    curr,
+                    curr
+                );
+
             } else {
-                dfs(ans, path + "+" + cur, num, target, i + 1, eval + cur, cur);
-                dfs(ans, path + "-" + cur, num, target, i + 1, eval - cur, -cur);
-                dfs(ans, path + "*" + cur, num, target, i + 1, eval - multed + multed * cur, multed * cur);
+
+                helper(
+                    num,
+                    target,
+                    j + 1,
+                    path + "+" + curr, 
+                    curr,
+                    eval + curr
+                );
+
+                helper(
+                    num,
+                    target,
+                    j + 1,
+                    path + "-" + curr, 
+                    -curr,             
+                    eval - curr
+                );
+                helper(
+                    num,
+                    target,
+                    j + 1,
+                    path + "*" + curr,
+                    last * curr,
+                    eval - last + last * curr
+                );
             }
         }
     }
 }
 
-
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
