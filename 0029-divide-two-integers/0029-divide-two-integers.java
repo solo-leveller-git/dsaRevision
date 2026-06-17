@@ -1,5 +1,4 @@
 class Solution {
-
     public int divide(int dividend, int divisor) {
 
         if (dividend == Integer.MIN_VALUE && divisor == -1)
@@ -8,29 +7,22 @@ class Solution {
         long dvd = Math.abs((long) dividend);
         long dvs = Math.abs((long) divisor);
 
-        int ans = 0;
+        long ans = 0;
 
-        while (dvd >= dvs) {
-
-            int pow = 0;
-
-            while (dvd >= (dvs << (pow + 1))) {
-                pow++;
+        for (int i = 31; i >= 0; i--) {
+            if ((dvs << i) <= dvd) {
+                dvd -= (dvs << i);
+                ans += (1L << i);
             }
-
-            ans += (1 << pow);
-
-            dvd -= (dvs << pow);
         }
 
-        if ((dividend < 0) ^ (divisor < 0)) {
+        if ((dividend < 0) ^ (divisor < 0))
             ans = -ans;
-        }
 
-        return ans;
+        return (int) ans;
     }
 }
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
