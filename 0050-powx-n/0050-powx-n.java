@@ -1,30 +1,27 @@
 class Solution {
-
     public double myPow(double x, int n) {
+        long exp = n;
 
-        long N = n;
-
-        if (N < 0) {
-            x = 1.0 / x;
-            N = -N;
+        if (exp < 0) {
+            x = 1 / x;
+            exp = -exp;
         }
 
-        double temp = 1;
+        double ans = 1;
 
-        while (N > 0) {
-
-            if ((N & 1) == 1) {
-                temp *= x;
+        while (exp > 0) {
+            if ((exp & 1) == 1) {
+                ans *= x;
             }
 
             x *= x;
-            N >>= 1;
+            exp >>= 1;
         }
 
-        return temp;
+        return ans;
     }
 }
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
