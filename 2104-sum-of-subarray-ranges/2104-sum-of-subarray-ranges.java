@@ -1,76 +1,58 @@
 class Solution {
 
     public long subArrayRanges(int[] nums) {
+        return sumOfMax(nums) - sumOfMin(nums);
+    }
 
-        int n = nums.length;
+    private long sumOfMax(int[] arr) {
+        Stack<long[]> st = new Stack<>();
+        long ans = 0;
 
-        long minSum = 0;
-        long maxSum = 0;
-
-        Stack<Integer> st = new Stack<>();
-
-        // ---------- MINIMUM CONTRIBUTION ----------
-
-        for (int i = 0; i <= n; i++) {
-
-            while (!st.isEmpty() &&
-                  (i == n || nums[st.peek()] >= nums[i])) {
-
-                int mid = st.pop();
-
-                int left;
-
-                if (st.isEmpty()) {
-                    left = -1;
-                } else {
-                    left = st.peek();
-                }
-
-                int right = i;
-
-                long leftCount = mid - left;
-                long rightCount = right - mid;
-
-                minSum += (long) nums[mid] * leftCount * rightCount;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (!st.isEmpty() && arr[i] >= arr[(int) st.peek()[0]]) {
+                ans += st.pop()[1];
             }
 
-            st.push(i);
+            if (st.isEmpty()) {
+                st.push(new long[]{i, (long) arr[i] * (arr.length - i)});
+            } else {
+                st.push(new long[]{
+                    i,
+                    st.peek()[1] + (long) arr[i] * (((int) st.peek()[0] - i))
+                });
+            }
         }
 
-        st.clear();
+        while (!st.isEmpty()) ans += st.pop()[1];
 
-        // ---------- MAXIMUM CONTRIBUTION ----------
+        return ans;
+    }
 
-        for (int i = 0; i <= n; i++) {
+    private long sumOfMin(int[] arr) {
+        Stack<long[]> st = new Stack<>();
+        long ans = 0;
 
-            while (!st.isEmpty() &&
-                  (i == n || nums[st.peek()] <= nums[i])) {
-
-                int mid = st.pop();
-
-                int left;
-
-                if (st.isEmpty()) {
-                    left = -1;
-                } else {
-                    left = st.peek();
-                }
-
-                int right = i;
-
-                long leftCount = mid - left;
-                long rightCount = right - mid;
-
-                maxSum += (long) nums[mid] * leftCount * rightCount;
+        for (int i = arr.length - 1; i >= 0; i--) {
+            while (!st.isEmpty() && arr[i] <= arr[(int) st.peek()[0]]) {
+                ans += st.pop()[1];
             }
 
-            st.push(i);
+            if (st.isEmpty()) {
+                st.push(new long[]{i, (long) arr[i] * (arr.length - i)});
+            } else {
+                st.push(new long[]{
+                    i,
+                    st.peek()[1] + (long) arr[i] * (((int) st.peek()[0] - i))
+                });
+            }
         }
 
-        return maxSum - minSum;
+        while (!st.isEmpty()) ans += st.pop()[1];
+
+        return ans;
     }
 }
 
 // Synced seamlessly with LeetHub Pro
 // Pro features: https://bit.ly/leethubpro | Free version: https://bit.ly/leethubv4
-// Get it here: https://chromewebstore.google.com/detail/leethub-v4/bcilpkkbokcopmabingnndookdogmbna
+// Get it here: https://chromewebstore.google.com/detail/bcilpkkbokcopmabingnndookdogmbna
