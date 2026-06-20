@@ -4,17 +4,8 @@ class Solution {
         int r = 0;
         int c = k;
         int ans = 0;
-        if(k==0){
-            int sum = 0;
-            for(int i = 0 ; i < nums.length ; i++){
-                if(nums[i]==0)sum = 0;
-                else sum+=nums[i];
-                ans = Math.max(ans,sum);
-            }
-            return ans;
-        }
         while(r<nums.length){
-            while(nums[r]==0 && c==0 && l<r){
+            while(nums[r]==0 && c<=0 && l<=r){
                 if(nums[l]==0)c++;
                 l++;
             }
