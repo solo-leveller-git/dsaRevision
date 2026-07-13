@@ -1,13 +1,11 @@
 class Solution {
     public int firstUniqChar(String s) {
-        Map<Character,Integer> mp = new HashMap<>();
-        for(int i = 0 ; i < s.length() ; i++){
-            mp.put(s.charAt(i),mp.getOrDefault(s.charAt(i),0)+1);
-        }
-        int i = -1;
+        int[] bucket = new int[27];
         for(char ch:s.toCharArray()){
-            i++;
-            if(mp.get(ch)==1)return i;
+            bucket[ch-'a']++;
+        }
+        for(int i = 0 ; i < s.length() ; i++){
+            if(bucket[s.charAt(i)-'a']==1)return i;
         }
         return -1;
     }
